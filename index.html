@@ -1,0 +1,100 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8"> 
+	<meta name="viewport"
+		content="width=device-width, 
+					initial-scale=1.0"> 
+	<title>Transit Ipsum Generator</title> 
+	<link rel="stylesheet" href="style.css"> 
+</head> 
+
+<body class="container"> 
+	<header> 
+		<h1 class="heading-xl">Transit Ipsum Generator</h1> 
+        <p class="italic">Generates transit themed filler text. Users can customize the number of paragraphs, sentences, and words generated.</p>
+	</header> 
+	<main> 
+		<div class="options w-100 border-bottom pb-s"> 
+			<div class="paragraphs flex flex-row my-s"> 
+                <div class="flex align-center">
+                    <label for="paragraphs" class="label"> 
+                        Paragraphs: 
+                    </label> 
+                    <input type="range"
+                        id="paragraphs"
+                        min="1" max="50"
+                        value="1"> 
+                </div>
+				<span id="paragraphsValue"> 
+					1 
+				</span> 
+			</div> 
+			<div class="words flex flex-row"> 
+                <div class="flex align-center">
+                    <label for="words" class="label"> 
+                        Words per Sentence: 
+                    </label> 
+                    <input type="range"
+                        id="words"
+                        min="1"
+                        max="32"
+                        value="10"> 
+                </div>
+				<span id="wordsValue"> 
+					10 
+				</span> 
+			</div> 
+            <div class="sentences flex flex-row my-s">
+                <div class="flex align-center">
+                    <label for="sentences" class="label">
+                        Sentences per Paragraph:
+                    </label>
+                    <input type="range"
+                        id="sentences"
+                        min="1"
+                        max="10"
+                        value="5">
+                </div>
+                <span id="sentencesValue">
+                    5
+                </span>
+            </div>
+			<div class="tags flex flex-row align-center"> 
+				<label for="tags" class="label"> 
+					Tag: 
+				</label> 
+                <div class="custom-select">
+                    <select id="tags" class="select"> 
+                    </select> 
+                </div>
+			</div> 
+			<div class="include flex flex-row my-s align-center"> 
+				<label for="include" class="label"> 
+					Include HTML: 
+				</label> 
+                <div class="custom-select">
+                    <select id="include"> 
+                        <option value="Yes"> 
+                            Yes 
+                        </option> 
+                        <option value="No"> 
+                            No 
+                        </option> 
+                    </select> 
+                </div>
+			</div> 
+			<button id="generate" class="label my-s button"> 
+				Generate Transit Ipsum 
+			</button> 
+		</div> 
+		<div class="output w-100 my-s"> 
+			
+			<!-- Lorem Ipsum text will 
+				be displayed here -->
+		</div> 
+	</main> 
+	<script src="script.js"> </script> 
+</body> 
+
+</html>
