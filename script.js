@@ -1,230 +1,73 @@
-// Constants for tag options 
-const tagOptions = [ 
-	"p", "h1", "h2", 
-	"h3", "h4", "h5", 
-	"h6", "span", 
-]; 
+// DOM ELEMENTS 
+const optionsContainer = $('.options');
+const outputContainer = $('.output');
+const paragraphSlider = $('#paragraphs');
+const wordSlider = $('#words');
+const paragraphValue = $('#paragraphsValue');
+const wordsValue = $('#wordsValue');
+const generateButton = $('#generate');
 
-const WORDSARR = [
-    "bus", "train", "lightrail", "subway", "ferry", "bike", "walk", "transportation", "scooter", "skateboard", 
-    "transit", "shuttle", "taxi", "bus stop", "train station", "ferry terminal", "crosswalk", "headsign", "fare zone", 
-    "transfer", "farebox", "real-time tracking", "interline", "cable car", "bullet train", "metro", "funicular", 
-    "passenger", "bus driver", "operator", "train conductor", "shelterboard"
-]
+// UI 
 
-// Get DOM elements 
-const optionsContainer = 
-	document.querySelector(".options"); 
-const outputContainer = 
-	document.querySelector(".output"); 
-const tagsSelect = 
-	document.getElementById("tags"); 
-const paragraphsSlider = 
-	document.getElementById( 
-		"paragraphs"
-	); 
-const sentenceSlider = 
-    document.getElementById("sentences");
-const wordsSlider = 
-	document.getElementById("words"); 
-const paragraphsValue = 
-	document.getElementById( 
-		"paragraphsValue"
-	); 
-const wordsValue = 
-	document.getElementById( 
-		"wordsValue"
-	); 
-
-// Create Options UI 
-function createOptionsUI() { 
-
-// With tag options, fill up the <select> element. 
-	tagOptions.forEach((tag) => { 
-		const option = 
-			document.createElement( 
-				"option"
-			); 
-		option.value = tag; 
-		option.textContent = `<${tag}>`; 
-		tagsSelect.appendChild(option); 
-	}); 
-
-// Event listeners for sliders 
-	paragraphsSlider.addEventListener( 
-		"input", 
-		updateParagraphsValue 
-	); 
-	wordsSlider.addEventListener( 
-		"input", 
-		updateWordsValue 
-	); 
-    sentenceSlider.addEventListener(
-        "input", 
-        updateSentencesValue
-    )
-
-	const generateButton = 
-		document.getElementById( 
-			"generate"
-		); 
-	generateButton.addEventListener( 
-		"click", 
-		generateLoremIpsum 
-	); 
-} 
-
-// Update the displayed value for Paragraphs 
-function updateParagraphsValue() { 
-	paragraphsValue.textContent = 
-		paragraphsSlider.value; 
-} 
-
-// Words per Paragraph have got 
-// to be updated on the display 
-function updateWordsValue() { 
-	wordsValue.textContent = 
-		wordsSlider.value; 
-} 
-
-// Sentences per Paragraph have got
-// to be updated on the display
-function updateSentencesValue() {
-    sentencesValue.textContent = 
-        sentenceSlider.value;
+function createOptionsUI() {
+    // Event Listeners
+    paragraphSlider.on('input', updateParagraphValue);
+    wordSlider.on('input', updateWordValue);
+    generateButton.on('click', generateLoremIpsum);
 }
 
+// FUNCTIONS
+// Update display value for paragraphs 
+function updateParagraphValue() {
+    paragraphValue.text(paragraphSlider.val());
+}
 
+// Update display value for words
+function updateWordValue() {
+    wordsValue.text(wordSlider.val());
+}
 
-// Generate Lorem Ipsum text 
-function generateLoremIpsum() { 
-	const paragraphs = parseInt( 
-		paragraphsSlider.value 
-	); 
-    const sentences = parseInt(sentenceSlider.value);
-	const tag = 
-		document.getElementById( 
-			"tags"
-		).value; 
-	const includeHtml = 
-		document.getElementById( 
-			"include"
-		).value; 
-	const wordsPerSentence = parseInt( 
-		wordsSlider.value 
-	); 
+// Create Lorem Ipsum text 
+function generateLoremIpsum() {
+    const paragraphs = parseInt(paragraphSlider.val());
+    const words = parseInt(wordSlider.val());
 
-	const loremIpsumText = generateText( 
-		paragraphs, 
-		tag, 
-		includeHtml, 
-		sentences,
-		wordsPerSentence 
-	); 
-	displayLoremIpsum(loremIpsumText); 
-} 
+    const loremIpsum = generateText(paragraphs, words);
+    displayLoremIpsum(loremIpsum); 
+}
 
-// Function to generate Lorem Ipsum text 
-function generateText( 
-	paragraphs, 
-	tag, 
-	includeHtml, 
-	sentencesPerParagraph,
-	wordsPerSentence 
-) { 
+// Generate Lorem Ipsum text
+function generateText(paragraphs, words) {
+    const placeholderText = 'Bus train lightrail ferry bike walk transportation scooter skateboard transit shuttle taxi. Bus stop train station ferry terminal crosswalk. Headsign fare zone transfer farebox real-time tracking.'
     
-	// Create an array of paragraphs 
-	const loremIpsumArray = new Array( 
-		paragraphs 
-	).fill(""); 
-
-	// Generate sentences for each paragraph
-	for (
-		let i = 0;
-		i < paragraphs;
-		i++
-	) {
-		const sentences = generateSentences(
-			sentencesPerParagraph,
-			wordsPerSentence
-		);
-		loremIpsumArray[i] =
-			includeHtml === "Yes"
-				? `<${tag}>${sentences}</${tag}`
-				: sentences;
-	}
-
-	// Join paragraphs into a single string 
-	return loremIpsumArray.join("\n"); 
-} 
-
-
-// Function to generate a specified number of sentences
-function generateSentences(
-	sentencesPerParagraph,
-	wordsPerSentence
-) {
-	const sentencesArray = new Array(
-		sentencesPerParagraph
-	).fill(" ");
-
-  
-	// Generate words for each sentence
-	for (
-		let i = 0;
-		i < sentencesPerParagraph;
-		i++
-	) {
-		sentencesArray[i] = generateWords(
-			wordsPerSentence
-		);
-
-        // Add a period at the end of each sentence
-        sentencesArray[i] = sentencesArray[i] + ".";
-	}
-
-	let sentencesArr = sentencesArray.join(" ");
-
-	//  Capitalize the first letter of each sentence
-	let newSentencesArray = sentencesArr
-		.split(". ")
-		.map((sentence) => {
-			return (
-				sentence.charAt(0).toUpperCase() +
-				sentence.slice(1)
-			);
-		});
-	
-	// Join sentences into a single string
-	return newSentencesArray.join(". ");
-
+    // Create an array of paragraphs
+    const loremIpsumArray = new Array(paragraphs).fill("");
+    
+    // Generate words for each paragraph 
+    for ( let i = 0; i < paragraphs; i++ ) {
+        const words = generateWords(wordsPerParagraph);
+        loremIpsumArray[i] = words;
+        return loremIpsumArray.join('\n');
+    }
 }
 
-// Function to generate a specified number of words 
-function generateWords(numWords) { 
-	console.log('GENERATING WORDS HERE')
-	// Lorem Ipsum text for demonstration purposes 
-	const words = WORDSARR
-    console.log('WORDS:', words)
+// Generate a specified number of words 
+function generateWords(numWords) {
+    const placeholderText = 'Bus  train  lightrail  tram  subway  ferry  bike  walk  transportation  scooter  skateboard  transit  shuttle  taxi. Bus stop  train station  ferry terminal  crosswalk.  Headsign  fare zone  transfer  farebox  real-time tracking.'
+    const words = placeholderText.split('  ');
 
-	// Ensure the number of words requested is 
-	// within the bounds of the available words 
-    let wordsRes;
-	if (numWords <= words.length) { 
-        // choose random words from the array
-        const randomWords = words.sort(() => Math.random() - 0.5);
-        wordsRes = words.slice(0, numWords).join(" ");
-	} else { 
-		wordsRes = words.join(" "); 
-	} 
-    console.log('WORDS RES:', wordsRes)
-    return wordsRes;
-} 
+    // ensure the number of words requested is within the bounds of the available words
+    if (numWords <= words.length) {
+        return words.slice(0, numWords).join(' ');
+    } else {
+        return words.join(' ');
+    }
+}
 
-// Display Lorem Ipsum text 
-function displayLoremIpsum(text) { 
-	outputContainer.innerHTML = text; 
-} 
+// Display lorem ipsum text
+function displayLoremIpsum(text) {
+    outputContainer.text(text); 
+}
 
-// Initialize the app 
+// Initialize the app
 createOptionsUI();
