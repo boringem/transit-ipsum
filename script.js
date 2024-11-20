@@ -1,5 +1,4 @@
 $(document).ready(function () {
-	//your code here
 // Constants for tag options 
 const tagOptions = [ 
 	"p", "h1", "h2", 
@@ -8,10 +7,11 @@ const tagOptions = [
 ]; 
 
 const WORDSARR = [
-    "bus", "train", "lightrail", "subway", "ferry", "bike", "walk", "transportation", "scooter", "skateboard", 
-    "transit", "shuttle", "taxi", "bus stop", "train station", "ferry terminal", "crosswalk", "headsign", "fare zone", 
-    "transfer", "farebox", "real-time tracking", "interline", "cable car", "bullet train", "metro", "funicular", 
-    "passenger", "bus driver", "operator", "train conductor", "shelterboard", "crosstown", "fare", "route"
+   "bike", "bullet train", "bus driver", "bus stop", "busway", "bus", "cable car", "carpool", "circulator", "crosstown", "crosswalk", "deadhead",
+   "fare zone", "farebox", "fare", "ferry terminal", "ferry", "fixed route", "frequency", "funicular", "general transit feed specification",
+   "headsign", "headway", "interline", "intermodal", "lightrail", "metro", "multimodal", "operator", "passenger", "peak period", "real-time tracking",
+   "route", "scooter", "shelterboard", "shuttle", "skateboard", "subway", "taxi", "train conductor", "train station", "train", "transfer", "transit",
+   "transportation", "trolley", "walk"
 ]
 
 // Get DOM elements 
@@ -138,6 +138,8 @@ function generateText(
 		paragraphs 
 	).fill(""); 
 
+	console.log('LOREM IPSUM ARRAY:', loremIpsumArray);
+
 	// Generate sentences for each paragraph
 	for (
 		let i = 0;
@@ -150,7 +152,7 @@ function generateText(
 		);
 		loremIpsumArray[i] =
 			includeHtml === "Yes"
-				? `<${tag}>${sentences}</${tag}`
+				? `<div><${tag}>${sentences}</${tag}></div>`
 				: sentences;
 	}
 
@@ -202,10 +204,9 @@ function generateSentences(
 
 // Function to generate a specified number of words 
 function generateWords(numWords) { 
-	console.log('GENERATING WORDS HERE')
-	// Lorem Ipsum text for demonstration purposes 
+	// console.log('GENERATING WORDS HERE')
 	const words = WORDSARR
-    console.log('WORDS:', words)
+   // console.log('WORDS:', words)
 
 	// Ensure the number of words requested is within the bounds of the available words 
     let wordsRes;
@@ -216,7 +217,8 @@ function generateWords(numWords) {
 	} else { 
 		wordsRes = words.join(" "); 
 	} 
-    console.log('WORDS RES:', wordsRes)
+    // console.log('WORDS RES:', wordsRes)
+	wordsRes = wordsRes.replace(/\s+/g, ' ').trim()
     return wordsRes;
 } 
 
@@ -224,6 +226,7 @@ function generateWords(numWords) {
 function displayLoremIpsum(text) { 
 	outputContainer.innerHTML = text; 
 } 
+
 
 // Initialize the app 
 createOptionsUI();
