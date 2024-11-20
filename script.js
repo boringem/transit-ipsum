@@ -150,10 +150,17 @@ function generateText(
 			sentencesPerParagraph,
 			wordsPerSentence
 		);
-		loremIpsumArray[i] =
-			includeHtml === "Yes"
-				? `<div class="my-m"><${tag}>${sentences}</${tag}></div>`
-				: sentences;
+
+		let arrVal;
+		if (includeHtml === "Yes" && tag !== "span") {
+			arrVal = `<div class="my-m"><${tag}>${sentences}</${tag}></div>`
+		} else if (includeHtml === "Yes" && tag === "span") {
+			arrVal = `<${tag}>${sentences}</${tag}>`
+		} else {
+			arrVal = sentences;
+		}
+
+		loremIpsumArray[i] = arrVal;
 	}
 
 	// Join paragraphs into a single string 
