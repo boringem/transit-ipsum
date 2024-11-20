@@ -64,6 +64,11 @@ p {
     margin-bottom: 1em;
 }
 
+.my-m {
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+}
+
 .py-s {
     padding-top: 1em;
     padding-bottom: 1em;

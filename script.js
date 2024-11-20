@@ -152,7 +152,7 @@ function generateText(
 		);
 		loremIpsumArray[i] =
 			includeHtml === "Yes"
-				? `<div><${tag}>${sentences}</${tag}></div>`
+				? `<div class="my-m"><${tag}>${sentences}</${tag}></div>`
 				: sentences;
 	}
 
